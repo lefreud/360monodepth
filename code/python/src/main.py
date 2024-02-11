@@ -495,8 +495,9 @@ def monodepth_360(opt):
             if opt.grid_search:
                 metrics_list.append(list(weights) + [item for dic in pred_metrics for item in dic.values()])
             else:
-                serialization.save_metrics(output_results_file, pred_metrics, times, times_header,
-                                           idx, list(estimated_depthmap.keys()))
+                if pred_metrics is not None:
+                    serialization.save_metrics(output_results_file, pred_metrics, times, times_header,
+                                            idx, list(estimated_depthmap.keys()))
 
             # Remove temporal storage folder
             if opt.rm_debug_folder and os.path.isdir(debug_output_dir):
