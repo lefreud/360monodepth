@@ -61,7 +61,6 @@ RUN cd ./code/cpp/python/ && python3 ./setup.py build && python3 ./setup.py bdis
 RUN pip install timm==0.6.12
 RUN pip install OpenEXR==1.3.8
 RUN pip install skylibs
-RUN pip install pygltflib
 
 COPY ./code ./code
 COPY ./BoostingMonocularDepth ./BoostingMonocularDepth

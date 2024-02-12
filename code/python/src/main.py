@@ -490,7 +490,7 @@ def monodepth_360(opt):
             pred_metrics = error_metric(estimated_depthmap, erp_gt_depthmap) if erp_gt_filepath != "" else None
 
             serialization.save_predictions(output_folder, erp_gt_depthmap, erp_rgb_image_data, estimated_depthmap,
-                                           opt.persp_monodepth, idx=idx)
+                                           opt.persp_monodepth, idx=idx, filename_base=filename_base)
 
             if opt.grid_search:
                 metrics_list.append(list(weights) + [item for dic in pred_metrics for item in dic.values()])

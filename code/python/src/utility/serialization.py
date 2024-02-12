@@ -339,7 +339,7 @@ def save_metrics(output_file, pred_metrics, times, times_header, idx, blending_m
     f.close()
 
 
-def save_predictions(output_folder, erp_gt_depthmap, erp_rgb_image_data, estimated_depthmap, persp_monodepth, idx=0):
+def save_predictions(output_folder, erp_gt_depthmap, erp_rgb_image_data, estimated_depthmap, persp_monodepth, idx=0, filename_base=None):
     # Plot error maps
     print("Saving predictions to {}".format(output_folder))
     vmax = None
@@ -355,12 +355,13 @@ def save_predictions(output_folder, erp_gt_depthmap, erp_rgb_image_data, estimat
         else:
             pred = estimated_depthmap[key]
 
-        ezexr.imwrite(os.path.join(output_folder, "{:03}_360monodepth_{}_{}.exr".format(idx, persp_monodepth, key)), pred)
+        if filename_base is not None:
+            ezexr.imwrite(os.path.join(output_folder, "{}_360monodepth.exr".format(filename_base)), pred)
+        else:
+            ezexr.imwrite(os.path.join(output_folder, "{:03}_360monodepth_{}_{}.exr".format(idx, persp_monodepth, key)), pred)
         # depthmap_utils.write_pfm(os.path.join(output_folder, "{:03}_360monodepth_{}_{}.pfm".format(idx, persp_monodepth, key)), pred)
-        plt.imsave(os.path.join(output_folder, "{:03}_360monodepth_{}_{}.png".format(idx, persp_monodepth, key)),
-                   pred, cmap="turbo", vmin=vmin, vmax=vmax)
-        plt.imsave(os.path.join(output_folder, "{:03}_360monodepth_{}_{}_gray.png".format(idx, persp_monodepth, key)),
-                   pred, cmap="gray", vmin=vmin, vmax=vmax)
+        # plt.imsave(os.path.join(output_folder, "{:03}_360monodepth_{}_{}.png".format(idx, persp_monodepth, key)),
+        #            pred, cmap="turbo", vmin=vmin, vmax=vmax)
 
     if erp_gt_depthmap is not None:
         plt.imsave(os.path.join(output_folder, "{:03}_GT.png".format(idx)),
